@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewellery Billing</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <!-- Add Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="no-print" style="text-align: right; margin-bottom: 20px;">
+            <a href="/sales-history" class="generate-btn">Sales History</a>
+        </div>
+        <h1>XYZ JEWELLERS</h1>
+        <h2>Create New Bill</h2>
+
+        <form action="/generate-invoice" method="POST" id="invoiceForm">
+            <div class="form-section">
+                <h3>Customer Details</h3>
+                <div class="form-group">
+                    <label for="customerName">Customer Name:</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Address:</label>
+                    <textarea id="customerAddress" name="customerAddress" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state" value="ODISHA">
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number:</label>
+                    <input type="text" id="customerPhone" name="customerPhone" pattern="[0-9]{10}"
+                        title="10 digit phone number">
+                </div>
+                <div class="form-group">
+                    <label>Payment Mode:</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="paymentMode" value="Cash" checked> Cash</label>
+                        <label><input type="radio" name="paymentMode" value="Online"> Online</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Item Details</h3>
+                <div id="itemsContainer">
+                    <div class="item-row">
+                        <div class="form-group">
+                            <label>Item Name:</label>
+                            <select name="itemName" class="item-name" required>
+                                <option value="">Select Item</option>
+                                <option value="RING">RING</option>
+                                <option value="EARRING">EARRING</option>
+                                <option value="PENDANT">PENDANT</option>
+                                <option value="BANGLE">BANGLE</option>
+                                <option value="SANKHA">SANKHA</option>
+                                <option value="BRACELET">BRACELET</option>
+                                <option value="NECKLACE">NECKLACE</option>
+                                <option value="CHOKER NECKLACE">CHOKER NECKLACE</option>
+                                <option value="CHAIN">CHAIN</option>
+                                <option value="NOSE RING">NOSE RING</option>
+                                <option value="MAANG TIKKA">MAANG TIKKA</option>
+                                <option value="GOLD COIN / BISCUIT">GOLD COIN / BISCUIT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Purity:</label>
+                            <select name="purity" required>
+                                <option value="BIS916">BIS916</option>
+                                <option value="22CT">22CT</option>
+                                <option value="18CT">18CT</option>
+                                <option value="999GO">999GO</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity:</label>
+                            <input type="number" name="quantity" min="1" step="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (gm):</label>
+                            <input type="number" name="weight" min="0.001" step="0.001" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Rate (per gm):</label>
+                            <input type="number" name="rate" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Making Charge (per gm):</label>
+                            <input type="number" name="makingChargePerGram" min="0" step="0.01" required>
+                        </div>
+                        <button type="button" class="remove-item" onclick="removeItem(this)">×</button>
+                    </div>
+                </div>
+                <button type="button" id="addItem">+ Add Another Item</button>
+            </div>
+
+            <button type="submit" class="generate-btn">Generate Invoice</button>
+        </form>
+    </div>
+
+    <!-- Add jQuery and Select2 JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="/scripts/form.js"></script>
+    <script>
+  // Automatically convert all text inputs to uppercase
+  document.querySelectorAll('input[type="text"], textarea').forEach(input => {
+    input.addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+    });
+  });
+</script>
+</body>
+
+</html>

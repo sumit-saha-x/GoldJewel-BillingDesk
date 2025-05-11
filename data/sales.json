@@ -1,0 +1,119 @@
+[
+  {
+    "date": "10/05/2025",
+    "billNumber": "108",
+    "customerName": "SANJAY PRADHAN",
+    "customerAddress": "SEKH BAZAR",
+    "customerPhone": "",
+    "items": [
+      {
+        "weight": 5.16,
+        "rate": 9040
+      },
+      {
+        "weight": 0.57,
+        "rate": 7500
+      }
+    ],
+    "totals": {
+      "tax": 1701.8999999999999,
+      "grandTotal": 58432
+    }
+  },
+  {
+    "date": "12/05/2025",
+    "billNumber": "148",
+    "customerName": "SUMIT SAHA",
+    "customerAddress": "LONDON",
+    "customerPhone": "0012567849",
+    "items": [
+      {
+        "name": "PENDANT",
+        "purity": "BIS916",
+        "quantity": 1,
+        "weight": 12.45,
+        "rate": 9700,
+        "makingChargePerGram": 1000,
+        "goldCost": 120765,
+        "makingCharge": 12450,
+        "total": 133215
+      }
+    ],
+    "totals": {
+      "tax": 3996.45,
+      "grandTotal": 137211
+    }
+  },
+  {
+    "date": "12/05/2025",
+    "billNumber": "149",
+    "customerName": "ROMAN",
+    "customerAddress": "NYC",
+    "customerPhone": "5567895432",
+    "items": [
+      {
+        "name": "CHAIN",
+        "purity": "BIS916",
+        "quantity": 1,
+        "weight": 11.43,
+        "rate": 9200,
+        "makingChargePerGram": 980,
+        "goldCost": 105156,
+        "makingCharge": 11201.4,
+        "total": 116357.4
+      }
+    ],
+    "totals": {
+      "tax": 3490.7219999999998,
+      "grandTotal": 119848
+    }
+  },
+  {
+    "date": "12/05/2025",
+    "billNumber": "150",
+    "customerName": "ROMAN",
+    "customerAddress": "NYC",
+    "customerPhone": "5567895432",
+    "items": [
+      {
+        "name": "CHAIN",
+        "purity": "BIS916",
+        "quantity": 1,
+        "weight": 11.43,
+        "rate": 9200,
+        "makingChargePerGram": 980,
+        "goldCost": 105156,
+        "makingCharge": 11201.4,
+        "total": 116357.4
+      }
+    ],
+    "totals": {
+      "tax": 3490.7219999999998,
+      "grandTotal": 119848
+    }
+  },
+  {
+    "date": "12/05/2025",
+    "billNumber": "151",
+    "customerName": "ROMAN",
+    "customerAddress": "NYC",
+    "customerPhone": "5567895432",
+    "items": [
+      {
+        "name": "CHAIN",
+        "purity": "BIS916",
+        "quantity": 1,
+        "weight": 11.43,
+        "rate": 9200,
+        "makingChargePerGram": 980,
+        "goldCost": 105156,
+        "makingCharge": 11201.4,
+        "total": 116357.4
+      }
+    ],
+    "totals": {
+      "tax": 3490.7219999999998,
+      "grandTotal": 119848
+    }
+  }
+]

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - <%= billNumber %>
+    </title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional invoice-specific styles */
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            /* Reduced base font size */
+            color: #000;
+            /* Pure black for all text */
+        }
+
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #900C3F;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .tuhi-nirankar {
+            font-size: 14px;
+            margin-bottom: 1px;
+            color: #0d47a1;
+            /* A nice Google blue that contrasts well with red */
+            font-style: italic;
+        }
+
+        .shop-name {
+            font-size: 40px;
+            font-weight: bold;
+            color: #900C3F;
+            /* Red color */
+            margin-bottom: 5px;
+            font-family: 'PT Serif', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 105px;
+            gap: 16px;
+        }
+
+        .hallmark-logo {
+            height: 58px;
+            width: auto;
+            margin-right: 9px;
+        }
+
+        .shop-address {
+            font-size: 14.5px;
+            color: #114aa0;
+            /* Dark gray color */
+            line-height: 1.4;
+        }
+
+        .tax-retail {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .invoice-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .customer-info,
+        .invoice-meta {
+            width: 48%;
+        }
+
+        .invoice-container h3 {
+            color: #900C3F;
+            /* or any color you want */
+        }
+
+        .customer-info {
+            border-right: 1px solid #ddd;
+            /* Thin line between columns */
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 10px;
+        }
+
+        .items-table th,
+        .items-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .items-table th {
+            background-color: #f2f2f2;
+        }
+
+        .totals-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .payment-mode,
+        .calculation {
+            width: 48%;
+            padding-right: 2%;
+        }
+
+        .calculation-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .grand-total {
+            font-weight: bold;
+            border-top: 1px solid #333;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        .amount-in-words {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+
+        .terms-conditions {
+            margin-top: 35px;
+            font-size: 7px;
+            color: #000;
+            /* Pure black */
+        }
+
+        .terms-conditions h1 {
+            font-size: 9px;
+            margin-bottom: 10px;
+            color: #000;
+            /* Pure black */
+        }
+
+        .terms-conditions ul {
+            padding-left: 15px;
+        }
+
+        .terms-conditions li {
+            margin-bottom: 8px;
+        }
+
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 20px;
+            color: #000;
+            /* Pure black */
+        }
+
+        .thank-you {
+            text-align: center;
+            margin-top: 15px;
+            font-style: italic;
+            color: #555;
+            /* Keeping original color for thank you */
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .invoice-container {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <div class="tuhi-nirankar">"Invoice"</div>
+            <div class="shop-name">
+                <img src="/BIS-Hallmark-Logo.svg" alt="" class="hallmark-logo">
+                XYZ JEWELLERS
+            </div>
+            <div class="shop-address">
+                XXX YYYY ZZZZ, NYC-98-00-12, UAE<br>
+                Phone: XXXXXXXXXX, XXXXXXXXXX<br>
+            </div>
+        </div>
+
+        <div class="tax-retail">
+            <strong>TAX/RETAIL</strong><br>
+            Bill No.: <%= billNumber %> | Date: <%= date %>
+        </div>
+
+        <div class="invoice-info">
+            <div class="customer-info">
+                <strong>Customer Name:</strong>
+                <%= customerName %><br>
+                    <strong>Address:</strong>
+                    <%= customerAddress %><br>
+                    <strong>State:</strong>
+                    <%= state %><br>
+                    <strong>Phone:</strong>
+                    <%= customerPhone %>
+            </div>
+            <div class="invoice-meta">
+                <strong>GSTIN:</strong> 97OCJEI42996IRK<br>
+                <strong>H.S.N:</strong> 9447
+            </div>
+        </div>
+        <h3>Description Of Goods</h3>
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Item Description</th>
+                    <th>Purity</th>
+                    <th>Qty</th>
+                    <th>Net Wt (gm)</th>
+                    <th>Price/Gm</th>
+                    <th>Gold Cost</th>
+                    <th>Making Charge</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% items.forEach(item=> { %>
+                    <tr>
+                        <td>
+                            <%= item.name %>
+                        </td>
+                        <td>
+                            <%= item.purity %>
+                        </td>
+                        <td>
+                            <%= item.quantity %>
+                        </td>
+                        <td>
+                            <%= item.weight.toFixed(3) %>
+                        </td>
+                        <td>
+                            <%= item.rate.toFixed(2) %>
+                        </td>
+                        <td>
+                            <%= item.goldCost.toFixed(2) %>
+                        </td>
+                        <td>
+                            <%= item.makingCharge.toFixed(2) %>
+                        </td>
+                        <td>
+                            <%= item.total.toFixed(2) %>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+
+        <div class="totals-section">
+            <div class="payment-mode">
+                <strong>MODE OF PAYMENT:</strong>
+                <%= paymentMode %><br>
+                    <strong>Amount Paid:</strong> ₹<%= totals.grandTotal.toFixed(2) %>
+            </div>
+            <div class="calculation">
+                <div class="calculation-row">
+                    <span>Subtotal:</span>
+                    <span>₹<%= totals.subtotal.toFixed(2) %></span>
+                </div>
+                <div class="calculation-row">
+                    <span>CGST (1.5%):</span>
+                    <span>₹<%= totals.cgst.toFixed(2) %></span>
+                </div>
+                <div class="calculation-row">
+                    <span>SGST (1.5%):</span>
+                    <span>₹<%= totals.sgst.toFixed(2) %></span>
+                </div>
+                <div class="calculation-row">
+                    <span>Round Off:</span>
+                    <span>₹<%= totals.roundOff.toFixed(2) %></span>
+                </div>
+                <div class="calculation-row grand-total">
+                    <span>Grand Total:</span>
+                    <span>₹<%= totals.grandTotal.toFixed(2) %></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="amount-in-words">
+            <strong>Amount in Words:</strong>
+            <%= numberToWords.toWords(totals.grandTotal).toUpperCase() %> ONLY
+        </div>
+
+        <div class="terms-conditions">
+            <h1>TERMS AND CONDITIONS</h1>
+            <ul>
+                <li>Goods once sold cannot be taken back.</li>
+                <li>All disputes subject to CUTTACK jurisdiction only.</li>
+            </ul>
+        </div>
+
+        <div class="signature-section">
+            <div class="customer-signature">
+                <p>Customer's Signature</p>
+            </div>
+            <div class="proprietor-signature">
+                <p>proprietor signature</p>
+            </div>
+        </div>
+
+        <div class="thank-you">
+            Thank you, please visit again
+        </div>
+
+        <div class="no-print" style="margin-top: 30px; text-align: center;">
+            <button onclick="window.print()" class="print-btn">Print Invoice</button>
+            <button onclick="downloadInvoice()" class="save-btn">Save Invoice</button>
+        </div>
+    </div>
+
+    <script>
+        function downloadInvoice() {
+            const content = document.documentElement.outerHTML;
+            const blob = new Blob([content], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'invoice_<%= billNumber %>.html';
+            a.click();
+        }
+    </script>
+</body>
+
+</html>

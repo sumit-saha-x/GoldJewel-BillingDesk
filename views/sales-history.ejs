@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales History</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <style>
+        .history-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .filter-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .item-group {
+            background-color: #f9f9f9;
+        }
+        .item-detail {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="history-container">
+        <h1>Sales History</h1>
+        
+        <div class="filter-section">
+            <form id="filterForm">
+                <div class="form-group">
+                    <label for="fromDate">From Date:</label>
+                    <input type="date" id="fromDate" name="fromDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="toDate">To Date:</label>
+                    <input type="date" id="toDate" name="toDate" required>
+                </div>
+                <button type="submit" class="generate-btn">Filter Sales</button>
+            </form>
+        </div>
+        
+        <div id="results">
+            <!-- Results will be displayed here -->
+        </div>
+        
+        <div class="action-buttons">
+            <button id="downloadBtn" class="generate-btn" disabled>Download as CSV</button>
+            <a href="/" class="generate-btn">Back to Billing</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('filterForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                fromDate: document.getElementById('fromDate').value,
+                toDate: document.getElementById('toDate').value
+            };
+            
+            try {
+                const response = await fetch('/filter-sales', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const sales = await response.json();
+                displayResults(sales);
+                document.getElementById('downloadBtn').disabled = false;
+                
+                // Store current results for download
+                window.currentResults = sales;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error fetching sales data');
+            }
+        });
+        
+        function displayResults(sales) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (sales.length === 0) {
+                resultsDiv.innerHTML = '<p>No sales found for the selected period.</p>';
+                return;
+            }
+            
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Bill No.</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Weight (gm)</th>
+                            <th>Rate (per gm)</th>
+                            <th>Tax (₹)</th>
+                            <th>Grand Total (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            sales.forEach(sale => {
+                // First row with all details
+                html += `
+                    <tr class="item-group">
+                        <td>${sale.date}</td>
+                        <td>${sale.billNumber}</td>
+                        <td>${sale.customerName}</td>
+                        <td>${sale.customerPhone || '-'}</td>
+                        <td>${sale.customerAddress}</td>
+                        <td>${sale.items[0].weight.toFixed(3)}</td>
+                        <td>${sale.items[0].rate.toFixed(2)}</td>
+                        <td rowspan="${sale.items.length}">${sale.totals.tax.toFixed(2)}</td>
+                        <td rowspan="${sale.items.length}">${sale.totals.grandTotal.toFixed(2)}</td>
+                    </tr>
+                `;
+                
+                // Additional rows for remaining items
+                for (let i = 1; i < sale.items.length; i++) {
+                    html += `
+                        <tr class="item-detail">
+                            <td colspan="5"></td>
+                            <td>${sale.items[i].weight.toFixed(3)}</td>
+                            <td>${sale.items[i].rate.toFixed(2)}</td>
+                        </tr>
+                    `;
+                }
+            });
+            
+            html += `</tbody></table>`;
+            resultsDiv.innerHTML = html;
+        }
+        
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            if (!window.currentResults || window.currentResults.length === 0) {
+                alert('No data to download');
+                return;
+            }
+            
+            let csv = 'Date,Bill No.,Name,Phone,Address,Weight (gm),Rate (per gm),Tax (₹),Grand Total (₹)\n';
+            
+            window.currentResults.forEach(sale => {
+                // First item with all details
+                csv += `"${sale.date}","${sale.billNumber}","${sale.customerName}","${sale.customerPhone || ''}",` +
+                       `"${sale.customerAddress}",${sale.items[0].weight.toFixed(3)},${sale.items[0].rate.toFixed(2)},` +
+                       `${sale.totals.tax.toFixed(2)},${sale.totals.grandTotal.toFixed(2)}\n`;
+                
+                // Additional items (without repeating the totals)
+                for (let i = 1; i < sale.items.length; i++) {
+                    csv += `"${sale.date}","${sale.billNumber}","${sale.customerName}","${sale.customerPhone || ''}",` +
+                           `"${sale.customerAddress}",${sale.items[i].weight.toFixed(3)},${sale.items[i].rate.toFixed(2)},,\n`;
+                }
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sales_history_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+    </script>
+</body>
+</html>

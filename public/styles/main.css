@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+    color: #d4af37;
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    background-color: #d4af37;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #c19b2e;
+}
+
+.generate-btn {
+    font-size: 16px;
+    padding: 12px 20px;
+    margin-top: 20px;
+}
+
+/* Sales History Link Button Styles */
+a.generate-btn {
+    display: inline-block;
+    background-color: #36c127;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px; /* Adds some spacing if needed */
+    text-align: center;
+    line-height: normal; /* Fixes vertical alignment */
+}
+
+a.generate-btn:hover {
+    background-color: #36c127;
+    text-decoration: none;
+}
+
+.item-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 0.8fr 1fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.remove-item {
+    background: #ff4444;
+    color: white;
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#addItem {
+    margin-top: 10px;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+}
