@@ -82,7 +82,7 @@ cd GoldJewel-BillingDesk
 3. Start the application: node app.js
 4. Open in browser:
 Go to http://localhost:3000
-
+```
 ---
 
 ## 📃 License
